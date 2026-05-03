@@ -18,7 +18,6 @@ export const TodoItem = ({
 }: Props) => {
   const [editTitle, setEditTitle] = useState(todo.title);
   const [isEditing, setIsEditing] = useState(false);
-  const [hasSaveError, setHasSaveError] = useState(false);
   const isSavingRef = useRef(false);
 
   const handleCheckboxChange = () => {
@@ -56,9 +55,8 @@ export const TodoItem = ({
     updateTodo?.({ ...todo, title: trimmedEditTitle })
       .then(() => {
         setIsEditing(false);
-        setHasSaveError(false);
       })
-      .catch(() => setHasSaveError(true))
+      .catch(() => {})
       .finally(() => {
         isSavingRef.current = false;
       });
@@ -71,10 +69,6 @@ export const TodoItem = ({
   };
 
   const handleBlur = () => {
-    if (hasSaveError) {
-      return;
-    }
-
     saveChanges();
   };
 

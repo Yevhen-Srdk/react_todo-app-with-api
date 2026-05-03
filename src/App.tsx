@@ -124,7 +124,10 @@ export const App: React.FC = () => {
           return newTodos;
         });
       })
-      .catch(() => setError(Errors.unableUpdateTodoError))
+      .catch(e => {
+        setError(Errors.unableUpdateTodoError);
+        throw e;
+      })
       .finally(() => {
         setLoadingIds(prev => prev.filter(id => id !== updatedTodo.id));
       });
